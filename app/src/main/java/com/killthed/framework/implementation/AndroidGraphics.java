@@ -54,11 +54,11 @@ public class AndroidGraphics implements Graphics {
             in = assets.open(fileName);
             bitmap = BitmapFactory.decodeStream(in, null, options);
             if (bitmap == null)
-                throw new RuntimeException("Couldn't load bitmap from asset '"
+                throw new RuntimeException("Could not load bitmap from asset '"
                         + fileName + "'");
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load bitmap from asset '"
-                    + fileName + "'");
+                    + fileName + "':"+e.getMessage());
         } finally {
             if (in != null) {
                 try {

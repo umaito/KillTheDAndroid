@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
+import android.view.MotionEvent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.VelocityTracker;
 
 import com.killthed.framework.Game;
 import com.killthed.framework.Graphics;
@@ -19,12 +20,13 @@ import com.killthed.framework.Screen;
 
 public class GameScreen extends Screen {
     enum GameState {
-        Ready, Running, Paused, GameOver
+        Ready, Running, Paused, GameOver, Win
     }
 
     GameState state = GameState.Ready;
 
     // Variable Setup
+
 
     private static Background bg1, bg2;
     private static TheD thed;
@@ -32,6 +34,11 @@ public class GameScreen extends Screen {
     public static Boss1 boss1;
     public static Boss2 boss2;
     public static int score = 0;
+    int t = 0;
+    int b = 0;
+    int b2 = 0;
+    int n = 0;
+    int h = 50;
     private Image character, heliboy, imboss, imboss2;
 
 
@@ -66,8 +73,8 @@ public class GameScreen extends Screen {
 
 
         heliboy = Assets.heliboy;
-
-
+        imboss = Assets.imboss;
+        imboss2 = Assets.imboss2;
 
         // Defining a paint object
         paint = new Paint();
@@ -77,7 +84,7 @@ public class GameScreen extends Screen {
         paint.setColor(Color.WHITE);
 
         paint2 = new Paint();
-        paint2.setTextSize(100);
+        paint2.setTextSize(80);
         paint2.setTextAlign(Paint.Align.CENTER);
         paint2.setAntiAlias(true);
         paint2.setColor(Color.WHITE);
@@ -102,6 +109,8 @@ public class GameScreen extends Screen {
             updatePaused(touchEvents);
         if (state == GameState.GameOver)
             updateGameOver(touchEvents);
+        if (state == GameState.Win)
+            updateWin(touchEvents);
     }
 
     private void updateReady(List touchEvents) {
@@ -113,18 +122,83 @@ public class GameScreen extends Screen {
 
         if (touchEvents.size() > 0)
             state = GameState.Running;
+
+    }
+
+    private void updateWin(List touchEvents){
+        int len = touchEvents.size();
+        for (int i = 0; i < len; i++) {
+            TouchEvent event = (TouchEvent)touchEvents.get(i);
+            if (event.type == TouchEvent.TOUCH_DOWN) {
+                if (inBounds(event, 0, 0, 800, 480)) {
+                    nullify();
+                    game.setScreen(new MainMenuScreen(game));
+                    return;
+                }
+            }
+        }
     }
 
     private void updateRunning(List touchEvents, float deltaTime) {
 
-        int t = 0;
-        int b = 0;
-        int b2 = 0;
-        int n = 0;
-        int h = 50;
+        int len = touchEvents.size();
+        for (int i = 0; i < len; i++) {
+            TouchEvent event = (TouchEvent)touchEvents.get(i);
+            if (event.type == TouchEvent.TOUCH_DOWN) {
+
+
+                if (event.x > thed.getCenterX() + 25) {
+                    // Move right.
+                    thed.moveRight();
+
+                }else if (event.x < thed.getCenterX()+25 && event.x > thed.getCenterX() -25){
+                        thed.setCenterX(event.x);
+                    } else if(event.x < thed.getCenterX() -25){
+                    thed.moveLeft();
+
+                }
+                if (event.y > thed.getCenterY() +30) {
+                    thed.moveDown();
+
+                }else if (event.y > thed.getCenterY()-30 && event.y < thed.getCenterY() +30){
+                        thed.setCenterY(event.y);
+                    } else if(event.y < thed.getCenterY() -30){
+
+                    thed.moveUp();
+
+                }
+
+            }
+
+            if (event.type == TouchEvent.TOUCH_UP) {
+
+                if (inBounds(event, 0, 0, 35, 35)) {
+                    pause();
+
+                }
+                if (event.x > thed.getCenterX() +25) {
+                    // Move right.
+                    thed.stopRight();
+                }else if (event.x < thed.getCenterX()+25 && event.x > thed.getCenterX() -25){
+                    thed.setCenterX(event.x);
+                } else if(event.x < thed.getCenterX() -25){
+                    thed.stopLeft();
+
+                }
+                if (event.y > thed.getCenterY() +35 ) {
+                    thed.stopDown();
+                }else if (event.y > thed.getCenterY()-35 && event.y < thed.getCenterY() +35){
+                    thed.setCenterY(event.y);
+
+                } else if(event.y < thed.getCenterY() -35){
+
+                    thed.stopUp();
+                }
+            }
+
+        }
 
         if (state == GameState.Running) {
-
 
                 float randomX1 = 50 + (float) Math.random() * 350;
 
@@ -133,13 +207,17 @@ public class GameScreen extends Screen {
                 float randomX3 = 50 + (float) Math.random() * 350;
 
                 float randomX4 = 50 + (float) Math.random() * 350;
+                boss1.update();
+                boss2.update();
                 thed.update();
+                bg1.update();
+                bg2.update();
                 hb.update();
                 hb2.update();
                 hb3.update();
                 hb4.update();
-                boss1.update();
-                boss2.update();
+
+
 
                 if (thed.getCenterY() - boss1.getCenterY() > 1400
                         || boss1.getCenterX() == -100
@@ -167,8 +245,7 @@ public class GameScreen extends Screen {
                         hb4.health = 3;
                     }
                 }
-                bg1.update();
-                bg2.update();
+
 
                 if (boss2.getCenterY() > 10 & boss2.getCenterX() != -100) {
 
@@ -183,11 +260,11 @@ public class GameScreen extends Screen {
                 }
 
                 t = t + 1;
-
                 if (t == 10) {
                     thed.shoot();
                     t = 0;
                 }
+
 
                 if (boss1.getCenterY() > 0) {
                     b = b + 1;
@@ -196,6 +273,7 @@ public class GameScreen extends Screen {
                         b = 0;
                     }
                 }
+
                 if (boss2.getCenterY() > 0) {
                     b2 = b2 + 1;
                     if (b2 == 60) {
@@ -213,9 +291,7 @@ public class GameScreen extends Screen {
                     }
                 }
 
-
-
-                if (thed.getCenterX() == -100) {
+                if (thed.getCenterX() > 600) {
                     state = GameState.GameOver;
                 }
 
@@ -265,7 +341,7 @@ public class GameScreen extends Screen {
                     }
                 }
 
-            }
+           }
 
         }
 
@@ -282,9 +358,10 @@ public class GameScreen extends Screen {
     }
 
     private void updatePaused(List touchEvents) {
-        /*int len = touchEvents.size();
+
+        int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
-            TouchEvent event = touchEvents.get(i);
+            TouchEvent event = (TouchEvent)touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (inBounds(event, 0, 0, 800, 240)) {
 
@@ -298,13 +375,13 @@ public class GameScreen extends Screen {
                     goToMenu();
                 }
             }
-        }*/
+        }
     }
 
     private void updateGameOver(List touchEvents) {
-        /*int len = touchEvents.size();
+        int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
-            TouchEvent event = touchEvents.get(i);
+            TouchEvent event = (TouchEvent)touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 if (inBounds(event, 0, 0, 800, 480)) {
                     nullify();
@@ -312,7 +389,7 @@ public class GameScreen extends Screen {
                     return;
                 }
             }
-        }*/
+        }
 
     }
 
@@ -329,8 +406,29 @@ public class GameScreen extends Screen {
         ArrayList projectiles = thed.getProjectiles();
         for (int i = 0; i < projectiles.size(); i++) {
             Projectile p = (Projectile) projectiles.get(i);
-            g.drawRect(p.getX(), p.getY(), 10, 5, Color.YELLOW);
+            g.drawRect(p.getX(), p.getY(), 10, 10, Color.YELLOW);
         }
+        ArrayList badprojectiles = boss1.getBadProjectiles();
+        for (int i = 0; i < badprojectiles.size(); i++) {
+            BadProjectile p = (BadProjectile) badprojectiles.get(i);
+            g.drawRect(p.getX(), p.getY(), 7, 10, Color.RED);
+        }
+        ArrayList badprojectiles2 = boss2.getBadProjectiles();
+        for (int i = 0; i < badprojectiles2.size(); i++) {
+            BadProjectile p = (BadProjectile) badprojectiles2.get(i);
+            g.drawRect(p.getX(), p.getY(), 7, 10, Color.RED);
+        }
+        ArrayList badprojectiles3 = hb2.getBadProjectiles();
+        for (int i = 0; i < badprojectiles3.size(); i++) {
+            BadProjectile p = (BadProjectile) badprojectiles3.get(i);
+            g.drawRect(p.getX(), p.getY(), 7, 10, Color.RED);
+        }
+        ArrayList badprojectiles4 = hb4.getBadProjectiles();
+        for (int i = 0; i < badprojectiles4.size(); i++) {
+            BadProjectile p = (BadProjectile) badprojectiles4.get(i);
+            g.drawRect(p.getX(), p.getY(), 7, 10, Color.RED);
+        }
+
         // First draw the game elements.
 
 
@@ -347,19 +445,12 @@ public class GameScreen extends Screen {
         g.drawImage(imboss2, boss2.getCenterX() - 48,
                 boss2.getCenterY() - 48);
 
-        // g.drawRect((int)thed.rect.getX(), (int)thed.rect.getY(),
-        // (int)thed.rect.getWidth(), (int)thed.rect.getHeight());
-        // g.drawRect((int)thed.rect2.getX(), (int)thed.rect2.getY(),
-        // (int)thed.rect2.getWidth(), (int)thed.rect2.getHeight());
+
         g.drawImage(character, thed.getCenterX() - 50,
                 thed.getCenterY() - 75);
-        /*g.setFont( 25);
-        g.setColor(Color.GRAY);
-        g.drawString("" + playerScore /100, 20, 30);*/
 
-        // Example:
-        // g.drawImage(Assets.background, 0, 0);
-        // g.drawImage(Assets.character, characterX, characterY);
+        g.drawString(Integer.toString(score), 400, 50, paint);
+
 
         // Secondly, draw the UI above the game elements.
         if (state == GameState.Ready)
@@ -370,7 +461,8 @@ public class GameScreen extends Screen {
             drawPausedUI();
         if (state == GameState.GameOver)
             drawGameOverUI();
-
+        if (state == GameState.Win)
+            drawWinUI();
     }
 
 
@@ -389,6 +481,7 @@ public class GameScreen extends Screen {
         hb4 = null;
         boss1 = null;
         boss2 = null;
+        score = 0;
 
         character = null;
 
@@ -404,7 +497,7 @@ public class GameScreen extends Screen {
         Graphics g = game.getGraphics();
 
         g.drawARGB(155, 0, 0, 0);
-        g.drawString("Tap to Start.", 400, 240, paint);
+        g.drawString("Let's GO!", 240, 240, paint);
 
     }
 
@@ -417,17 +510,22 @@ public class GameScreen extends Screen {
         Graphics g = game.getGraphics();
         // Darken the entire screen so you can display the Paused screen.
         g.drawARGB(155, 0, 0, 0);
-        g.drawString("Resume", 400, 165, paint2);
-        g.drawString("Menu", 400, 360, paint2);
+        g.drawString("Continuer", 240, 165, paint2);
+        g.drawString("Menu", 240, 360, paint2);
 
+    }
+    private void drawWinUI() {
+        Graphics g = game.getGraphics();
+        g.drawRect(0, 0, 1500, 1500, Color.BLACK);
+        g.drawString("Vous avez survécu", 240, 240, paint2);
+        g.drawString("L'opération ''Kill The D'' est un échec", 240, 290, paint);
     }
 
     private void drawGameOverUI() {
         Graphics g = game.getGraphics();
-        g.drawRect(0, 0, 1281, 801, Color.BLACK);
-        g.drawString("GAME OVER.", 400, 240, paint2);
-        g.drawString("Tap to return.", 400, 290, paint);
-
+        g.drawRect(0, 0, 1500, 1500, Color.BLACK);
+        g.drawString("You are dead", 240, 240, paint2);
+        g.drawString("Vous êtes un perdant", 240, 290, paint);
     }
 
     @Override
@@ -442,6 +540,7 @@ public class GameScreen extends Screen {
         if (state == GameState.Paused)
             state = GameState.Running;
     }
+
 
     @Override
     public void dispose() {

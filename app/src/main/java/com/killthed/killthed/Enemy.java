@@ -16,7 +16,7 @@ public class Enemy {
 
 		centerY += speedY;
 		speedY = bg.getSpeedY();
-		r.set(centerX - 25, centerY - 25, 60, 60);
+		r.set(centerX - 25, centerY - 25, centerX + 25, centerY + 35);
 		if (Rect.intersects(r,TheD.yellowRed)) {
 			checkCollision();
 		}

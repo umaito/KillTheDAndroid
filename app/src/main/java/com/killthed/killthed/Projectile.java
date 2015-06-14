@@ -19,7 +19,7 @@ public class Projectile {
 
 	public void update() {
 		y += -speedY;
-		r.set(x, y, 5, 5);
+		r.set(x, y, x+10, y+10);
 		if (y < 0 ) {
 			visible = false;
 			r = null;
@@ -30,7 +30,7 @@ public class Projectile {
 	}
 	
 	private void checkCollision() {
-		if(Rect.intersects(r,GameScreen.hb.r)){
+		if(Rect.intersects(r, GameScreen.hb.r)){
 			visible = false;
 			if (GameScreen.hb.health > 0) {
 				GameScreen.hb.health -= 1;
@@ -42,7 +42,7 @@ public class Projectile {
 			}
 		}
 		
-		if (Rect.intersects(r,GameScreen.hb2.r)){
+		if (Rect.intersects(r, GameScreen.hb2.r)){
 			visible = false;
 			if (GameScreen.hb2.health > 0) {
                 GameScreen.hb2.health -= 1;

@@ -19,7 +19,7 @@ public class BadProjectile {
 
 	public void update() {
 		y += -speedY;
-		r.set(x, y, 5, 5);
+		r.set(x, y, x+7, y+10);
 		if (y < 0 ) {
 			visible = false;
 			r = null;

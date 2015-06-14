@@ -10,7 +10,7 @@ public class TheD {
 	// Constants are Here
 	final int JUMPSPEED = -15;
 	final int MOVESPEED = 5;
-	final int GROUND = 640;
+	final int GROUND = 699;
 
 	private int centerX = 240;
 	private int centerY = GROUND;
@@ -39,8 +39,9 @@ public class TheD {
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public void update() {
-		
-		// Moves Character or Scrolls Background accordingly.
+
+
+        // Moves Character or Scrolls Background accordingly.
 		if (boss1 != null && (boss1.getCenterY() < 100 || boss1.getCenterX() == -100) && ( boss2.getCenterY() < 100 || boss2.getCenterX() == -100)) {
 			if (speedY == 0 || speedY < 0) {
 				bg1.setSpeedY(MOVESPEED);
@@ -120,10 +121,10 @@ public class TheD {
 			centerY = 151;
 		}
 
-		rect.set(centerX - 25, centerY - 63, 50, 55);
-		rect2.set(centerX - 35, rect.top + 40, 68, 90);
+		rect.set(centerX - 25, centerY - 63, centerX + 25, centerY + 63);
+		rect2.set(centerX - 35, rect.top + 63, centerX + 35, rect.top + 128);
 
-		yellowRed.set(centerX - 110, centerY - 110, 180, 180);
+		yellowRed.set(centerX - 110, centerY - 110, centerX + 70, centerY + 70);
 
 	}
 
@@ -197,10 +198,7 @@ public class TheD {
 
 	}
 
-	public void jump() {
-		
 
-	}
 
 	public void shoot() {
 		if (boss2.getCenterX()> -100) {
@@ -223,9 +221,6 @@ public class TheD {
 		return centerY;
 	}
 
-	public boolean isJumped() {
-		return jumped;
-	}
 
 	public int getSpeedX() {
 		return speedX;
@@ -243,9 +238,6 @@ public class TheD {
 		this.centerY = centerY;
 	}
 
-	public void setJumped(boolean jumped) {
-		this.jumped = jumped;
-	}
 
 	public void setSpeedX(int speedX) {
 		this.speedX = speedX;
