@@ -8,13 +8,13 @@ public class TheD {
 	// change them.
 
 	// Constants are Here
-	final int JUMPSPEED = -15;
+
 	final int MOVESPEED = 5;
 	final int GROUND = 699;
 
 	private int centerX = 240;
 	private int centerY = GROUND;
-	private boolean jumped = false;
+
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
 	private boolean movingDown = false;
@@ -25,6 +25,8 @@ public class TheD {
 
 	private static Boss1 boss1 = GameScreen.getBoss1();
 	private static Boss2 boss2 = GameScreen.getBoss2();
+    private static Boss3 boss3 = GameScreen.getBoss3();
+    private static Boss4 boss4 = GameScreen.getBoss4();
 
 	private static Background bg1 = GameScreen.getBg1();
 	private static Background bg2 = GameScreen.getBg2();
@@ -42,7 +44,7 @@ public class TheD {
 
 
         // Moves Character or Scrolls Background accordingly.
-		if (boss1 != null && (boss1.getCenterY() < 100 || boss1.getCenterX() == -100) && ( boss2.getCenterY() < 100 || boss2.getCenterX() == -100)) {
+		if (boss1 != null && (boss1.getCenterY() < 100 || boss1.getCenterX() == -100) && ( boss2.getCenterY() < 100 || boss2.getCenterX() == -100) && ( boss3.getCenterY() < 100 || boss3.getCenterX() == -100) && ( boss4.getCenterY() < 100 || boss4.getCenterX() == -100)) {
 			if (speedY == 0 || speedY < 0) {
 				bg1.setSpeedY(MOVESPEED);
 				bg2.setSpeedY(MOVESPEED);

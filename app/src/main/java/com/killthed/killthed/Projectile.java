@@ -30,75 +30,96 @@ public class Projectile {
 	}
 	
 	private void checkCollision() {
-		if(Rect.intersects(r, GameScreen.hb.r)){
-			visible = false;
-			if (GameScreen.hb.health > 0) {
-				GameScreen.hb.health -= 1;
-			}
-			if (GameScreen.hb.health == 0) {
+        if (Rect.intersects(r, GameScreen.hb.r)) {
+            visible = false;
+            if (GameScreen.hb.health > 0) {
+                GameScreen.hb.health -= 1;
+            }
+            if (GameScreen.hb.health == 0) {
                 GameScreen.hb.setCenterX(-100);
                 GameScreen.score += 3;
-				
-			}
-		}
-		
-		if (Rect.intersects(r, GameScreen.hb2.r)){
-			visible = false;
-			if (GameScreen.hb2.health > 0) {
+
+            }
+        }
+
+        if (Rect.intersects(r, GameScreen.hb2.r)) {
+            visible = false;
+            if (GameScreen.hb2.health > 0) {
                 GameScreen.hb2.health -= 1;
-			}
-			if (GameScreen.hb2.health == 0) {
+            }
+            if (GameScreen.hb2.health == 0) {
                 GameScreen.hb2.setCenterX(-100);
                 GameScreen.score += 3;
-			}
+            }
 
-		}
-		if(Rect.intersects(r,GameScreen.hb3.r)){
-			visible = false;
-			if (GameScreen.hb3.health > 0) {
+        }
+        if (Rect.intersects(r, GameScreen.hb3.r)) {
+            visible = false;
+            if (GameScreen.hb3.health > 0) {
                 GameScreen.hb3.health -= 1;
-			}
-			if (GameScreen.hb3.health == 0) {
+            }
+            if (GameScreen.hb3.health == 0) {
                 GameScreen.hb3.setCenterX(-100);
                 GameScreen.score += 3;
-				
-			}
-		}
-		
-		if (Rect.intersects(r,GameScreen.hb4.r)){
-			visible = false;
-			if (GameScreen.hb4.health > 0) {
+
+            }
+        }
+
+        if (Rect.intersects(r, GameScreen.hb4.r)) {
+            visible = false;
+            if (GameScreen.hb4.health > 0) {
                 GameScreen.hb4.health -= 1;
-			}
-			if (GameScreen.hb4.health == 0) {
+            }
+            if (GameScreen.hb4.health == 0) {
                 GameScreen.hb4.setCenterX(-100);
                 GameScreen.score += 3;
-			}
+            }
 
-		}
-		if (Rect.intersects(r,GameScreen.boss1.r)){
-			visible = false;
-			if (GameScreen.boss1.health > 0) {
+        }
+        if (Rect.intersects(r, GameScreen.boss1.r)) {
+            visible = false;
+            if (GameScreen.boss1.health > 0) {
                 GameScreen.boss1.health -= 1;
-			}
-			if (GameScreen.boss1.health == 0) {
+            }
+            if (GameScreen.boss1.health == 0) {
                 GameScreen.boss1.setCenterX(-100);
                 GameScreen.score += 10;
-			}
+            }
 
-		}
-		if (Rect.intersects(r,GameScreen.boss2.r)){
-			visible = false;
-			if (GameScreen.boss2.health > 0) {
+        }
+
+        if (Rect.intersects(r, GameScreen.boss2.r)) {
+            visible = false;
+            if (GameScreen.boss2.health > 0) {
                 GameScreen.boss2.health -= 1;
-			}
-			if (GameScreen.boss2.health == 0) {
+            }
+            if (GameScreen.boss2.health == 0) {
                 GameScreen.boss2.setCenterX(-100);
                 GameScreen.score += 10;
-			}
+            }
+        }
+        if (Rect.intersects(r, GameScreen.boss3.r)) {
+            visible = false;
+            if (GameScreen.boss3.health > 0) {
+                GameScreen.boss3.health -= 1;
+            }
+            if (GameScreen.boss3.health == 0) {
+                GameScreen.boss3.setCenterX(-100);
+                GameScreen.score += 10;
+            }
+        }
+        if (Rect.intersects(r, GameScreen.boss4.r)) {
+            visible = false;
+            if (GameScreen.boss4.health > 0) {
+                GameScreen.boss4.health -= 1;
+            }
+            if (GameScreen.boss4.health == 0) {
+                GameScreen.boss4.setCenterX(-100);
+                GameScreen.score += 10;
+            }
+        }
 
-		}
-	}
+    }
 
 	public int getX() {
 		return x;

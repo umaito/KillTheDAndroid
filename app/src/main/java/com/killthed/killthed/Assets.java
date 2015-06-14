@@ -9,7 +9,7 @@ import com.killthed.framework.Sound;
 
 public class Assets {
 
-    public static Image menu, splash, background, character, heliboy, imboss, imboss2;
+    public static Image menu, splash, background, character, heliboy, imboss, imboss2, imboss3, imboss4;
     public static Sound click;
     public static Music theme;
 

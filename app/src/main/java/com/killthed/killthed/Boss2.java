@@ -43,12 +43,9 @@ public class Boss2 extends Enemy {
 
 	public void shoot() {
 
-		BadProjectile p = new BadProjectile(getCenterX() - 10,
-				getCenterY() - 25);
+		BadProjectile p = new BadProjectile(getCenterX(),
+				getCenterY() + 35);
 		badprojectiles.add(p);
-		BadProjectile b = new BadProjectile(getCenterX() + 10,
-				getCenterY() - 25);
-		badprojectiles.add(b);
 
 	}
 
