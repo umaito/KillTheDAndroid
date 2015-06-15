@@ -105,7 +105,7 @@ public class Projectile {
             }
             if (GameScreen.boss3.health == 0) {
                 GameScreen.boss3.setCenterX(-100);
-                GameScreen.score += 10;
+                GameScreen.score += 20;
             }
         }
         if (Rect.intersects(r, GameScreen.boss4.r)) {
@@ -115,7 +115,7 @@ public class Projectile {
             }
             if (GameScreen.boss4.health == 0) {
                 GameScreen.boss4.setCenterX(-100);
-                GameScreen.score += 10;
+                GameScreen.score += 35;
             }
         }
 

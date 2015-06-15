@@ -45,13 +45,14 @@ public class TheD {
 
         // Moves Character or Scrolls Background accordingly.
 		if (boss1 != null && (boss1.getCenterY() < 100 || boss1.getCenterX() == -100) && ( boss2.getCenterY() < 100 || boss2.getCenterX() == -100) && ( boss3.getCenterY() < 100 || boss3.getCenterX() == -100) && ( boss4.getCenterY() < 100 || boss4.getCenterX() == -100)) {
-			if (speedY == 0 || speedY < 0) {
+            
+            if (speedY == 0 || speedY < 0) {
 				bg1.setSpeedY(MOVESPEED);
 				bg2.setSpeedY(MOVESPEED);
 
 			}
 
-			
+
 			if (speedY == 10) {
 				centerY += speedY;
 				bg1.setSpeedY(MOVESPEED);
@@ -83,7 +84,7 @@ public class TheD {
 
 			}
 
-			
+
 			if (speedY == 10) {
 				centerY += speedY;
 				bg1.setSpeedY(0);

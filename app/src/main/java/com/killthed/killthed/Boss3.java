@@ -4,7 +4,7 @@ package com.killthed.killthed;
  * Created by Dylan on 14/06/2015.
  */
 public class Boss3 extends Enemy {
-    public int health = 17;
+    public int health = 20;
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private int speedX = 0;

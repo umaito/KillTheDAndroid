@@ -631,6 +631,7 @@ public class GameScreen extends Screen {
         g.drawString("L'opération ''Kill The D''", 240, 290, paint);
         g.drawString("est un échec", 240, 320, paint);
         g.drawString("Bravo", 240, 500, paint2);
+        g.drawString(Integer.toString(score), 400, 50, paint);
     }
 
     private void drawGameOverUI() {
@@ -638,6 +639,7 @@ public class GameScreen extends Screen {
         g.drawRect(0, 0, 1500, 1500, Color.BLACK);
         g.drawString("You are dead", 240, 240, paint2);
         g.drawString("Vous êtes un perdant", 240, 290, paint);
+        g.drawString(Integer.toString(score), 400, 50, paint);
     }
 
     @Override
